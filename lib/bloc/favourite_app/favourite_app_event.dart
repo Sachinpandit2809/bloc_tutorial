@@ -12,6 +12,17 @@ class FetchFavouriteList extends FavouriteAppEvent {}
 
 class AddFavouriteItem extends FavouriteAppEvent {
   final FavouriteItemModel item;
- const AddFavouriteItem({required this.item});
-  // List<Object> get props => [item];
+  const AddFavouriteItem({required this.item});
 }
+
+class SelectItem extends FavouriteAppEvent {
+  final FavouriteItemModel item;
+  const SelectItem({required this.item});
+}
+
+class UnSelectItem extends FavouriteAppEvent {
+  final FavouriteItemModel item;
+  const UnSelectItem({required this.item});
+}
+
+class DeleteItem extends FavouriteAppEvent {}

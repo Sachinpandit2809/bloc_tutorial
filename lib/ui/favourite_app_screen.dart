@@ -26,6 +26,19 @@ class _FavouriteAppScreenState extends State<FavouriteAppScreen> {
       appBar: AppBar(
         title: Text("Favourite app"),
         scrolledUnderElevation: 0,
+        actions: [
+          BlocBuilder<FavouriteAppBloc, FavouriteAppState>(
+              builder: (context, state) {
+            return Visibility(
+              visible: state.tempFavouriteItemList.isNotEmpty ? true : false,
+              child: IconButton(
+                  onPressed: () {
+                    context.read<FavouriteAppBloc>().add(DeleteItem());
+                  },
+                  icon: const Icon(Icons.delete)),
+            );
+          })
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -44,7 +57,24 @@ class _FavouriteAppScreenState extends State<FavouriteAppScreen> {
 
                     return Card(
                         child: ListTile(
-                      leading: Checkbox(value: true, onChanged: (v) {}),
+                      tileColor: state.tempFavouriteItemList.contains(item)
+                          ? Colors.green
+                          : Theme.of(context).primaryColor,
+                      leading: Checkbox(
+                          value: state.tempFavouriteItemList.contains(item)
+                              ? true
+                              : false,
+                          onChanged: (v) {
+                            if (v!) {
+                              context
+                                  .read<FavouriteAppBloc>()
+                                  .add(SelectItem(item: item));
+                            } else {
+                              context
+                                  .read<FavouriteAppBloc>()
+                                  .add(UnSelectItem(item: item));
+                            }
+                          }),
                       title: Text(item.value.toString()),
                       trailing: IconButton(
                           onPressed: () {

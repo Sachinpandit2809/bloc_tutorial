@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
           )
         ],
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Bloc Tutorial',
           themeMode: ThemeMode.dark,
           theme: ThemeData(
