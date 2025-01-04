@@ -1,7 +1,10 @@
 import 'package:bloc_tutorial/bloc/counter/counter_bloc.dart';
+import 'package:bloc_tutorial/bloc/favourite_app/favourite_app_bloc.dart';
 import 'package:bloc_tutorial/bloc/image_picker/image_picker_bloc.dart';
 import 'package:bloc_tutorial/bloc/switch_slider/switch_slider_bloc.dart';
 import 'package:bloc_tutorial/bloc/todo/todo_bloc.dart';
+import 'package:bloc_tutorial/repository/favourite_repositry.dart';
+import 'package:bloc_tutorial/ui/favourite_app_screen.dart';
 import 'package:bloc_tutorial/ui/image_picker_screen.dart';
 import 'package:bloc_tutorial/ui/switch_slider_screen.dart';
 import 'package:bloc_tutorial/ui/todo_screen.dart';
@@ -33,15 +36,20 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<TodoBloc>(
             create: (_) => TodoBloc(),
+          ),
+          BlocProvider<FavouriteAppBloc>(
+            create: (_) => FavouriteAppBloc(FavouriteRepositry()),
           )
         ],
         child: MaterialApp(
           title: 'Bloc Tutorial',
+          themeMode: ThemeMode.dark,
           theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            brightness: Brightness.dark,
+            // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: TodoScreen(),
+          home: FavouriteAppScreen(),
         ));
   }
 }
