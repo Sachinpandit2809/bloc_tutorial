@@ -1,6 +1,11 @@
 import 'package:bloc_tutorial/bloc/counter/counter_bloc.dart';
+import 'package:bloc_tutorial/bloc/image_picker/image_picker_bloc.dart';
 import 'package:bloc_tutorial/bloc/switch_slider/switch_slider_bloc.dart';
+import 'package:bloc_tutorial/bloc/todo/todo_bloc.dart';
+import 'package:bloc_tutorial/ui/image_picker_screen.dart';
 import 'package:bloc_tutorial/ui/switch_slider_screen.dart';
+import 'package:bloc_tutorial/ui/todo_screen.dart';
+import 'package:bloc_tutorial/utils/image_picker_utils.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,22 +21,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [
-        BlocProvider<CounterBloc>(
-          create: (context) => CounterBloc(),
-        ),
-        BlocProvider<SwitchSliderBloc>(
-          create: (_) => SwitchSliderBloc(),
-        )
-      ],
-      child: MaterialApp(
+        providers: [
+          BlocProvider<CounterBloc>(
+            create: (context) => CounterBloc(),
+          ),
+          BlocProvider<SwitchSliderBloc>(
+            create: (_) => SwitchSliderBloc(),
+          ),
+          BlocProvider<ImagePickerBloc>(
+            create: (_) => ImagePickerBloc(ImagePickerUtils()),
+          ),
+          BlocProvider<TodoBloc>(
+            create: (_) => TodoBloc(),
+          )
+        ],
+        child: MaterialApp(
           title: 'Bloc Tutorial',
           theme: ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: SwitchSliderScreen()),
-    );
+          home: TodoScreen(),
+        ));
   }
 }
 
