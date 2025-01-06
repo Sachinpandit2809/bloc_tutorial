@@ -22,9 +22,39 @@ class PostBloc extends Bloc<PostEvent, PostState> {
     });
   }
 
+  // steps
+  // checking the search bar is empty or not..
+  // if not empty then equate the id with searchale words;
+  // if no data found in temp list beacuse nothing matched in searching
+  //  if something found then we send temp list
+
   void _onFilterList(SearchItem event, Emitter emit) async {
-    tempPostList = state.postList
-        .where((e) => e.title.toLowerCase().compareTo(event.strSearch));
-    emit(state.copyWith());
+    // checking the search bar is empty or not..
+    if (event.strSearch.isEmpty) {
+      emit(state.copyWith(tempPostList: [], searchMessage: ''));
+    } else {
+      // if not empty then equate the id with searchale words;
+      // tempPostList = state.postList
+      //     .where((e) =>
+      //         e.id.toString().toLowerCase() == event.strSearch.toLowerCase())
+      //     .toList();
+      tempPostList = state.postList
+          .where((e) => e.title
+              .toString()
+              .toLowerCase()
+              .contains(event.strSearch.toLowerCase()))
+          .toList();
+      // if no data found in temp list beacuse nothing matched in searching
+      if (tempPostList.isEmpty) {
+        emit(state.copyWith(
+            tempPostList: tempPostList, searchMessage: "No data found"));
+      }
+      //  if something found then we send temp list
+      // exception condition for searchMessage that  after not matched
+      //then match so that we have to send the searchMessage to ""
+      else {
+        emit(state.copyWith(tempPostList: tempPostList, searchMessage: ''));
+      }
+    }
   }
 }

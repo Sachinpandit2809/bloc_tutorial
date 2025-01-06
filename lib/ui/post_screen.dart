@@ -15,7 +15,6 @@ class PostScreen extends StatefulWidget {
 class _PostScreenState extends State<PostScreen> {
   @override
   void initState() {
-  
     super.initState();
     context.read<PostBloc>().add(FetchPost());
   }
@@ -36,27 +35,48 @@ class _PostScreenState extends State<PostScreen> {
             return Column(
               children: [
                 TextFormField(
-                  decoration:const InputDecoration(
-                    hintText: 'Search with title', 
+                  decoration: const InputDecoration(
+                    hintText: 'Search with title',
                     border: OutlineInputBorder(),
                   ),
-                  onChanged: (v){},
+                  onChanged: (v) {
+                    context.read<PostBloc>().add(SearchItem(v));
+                  },
                 ),
                 Expanded(
-                  child: ListView.builder(
-                      itemCount: state.postList.length,
-                      itemBuilder: (context, index) {
-                        final item = state.postList[index];
-                        return Card(
-                          child: ListTile(
-                            contentPadding:const EdgeInsets.all(12),
-                            leading: Text(item.id.toString()),
-                            title: Text(item.title.toString().toUpperCase()),
-                            subtitle: Text(item.body.toString()),
-                            trailing: Text(item.userId.toString()),
-                          ),
-                        );
-                      }),
+                  child: state.searchMessage.isNotEmpty
+                      ? Center(child: Text(state.searchMessage.toString()))
+                      : ListView.builder(
+                          itemCount: state.tempPostList.isEmpty
+                              ? state.postList.length
+                              : state.tempPostList.length,
+                          itemBuilder: (context, index) {
+                            if (state.tempPostList.isNotEmpty) {
+                              final item = state.tempPostList[index];
+                              return Card(
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(12),
+                                  leading: Text(item.id.toString()),
+                                  title:
+                                      Text(item.title.toString().toUpperCase()),
+                                  subtitle: Text(item.body.toString()),
+                                  trailing: Text(item.userId.toString()),
+                                ),
+                              );
+                            } else {
+                              final item = state.postList[index];
+                              return Card(
+                                child: ListTile(
+                                  contentPadding: const EdgeInsets.all(12),
+                                  leading: Text(item.id.toString()),
+                                  title:
+                                      Text(item.title.toString().toUpperCase()),
+                                  subtitle: Text(item.body.toString()),
+                                  trailing: Text(item.userId.toString()),
+                                ),
+                              );
+                            }
+                          }),
                 ),
               ],
             );
