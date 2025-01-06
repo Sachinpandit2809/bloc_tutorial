@@ -1,11 +1,13 @@
 import 'package:bloc_tutorial/bloc/counter/counter_bloc.dart';
 import 'package:bloc_tutorial/bloc/favourite_app/favourite_app_bloc.dart';
 import 'package:bloc_tutorial/bloc/image_picker/image_picker_bloc.dart';
+import 'package:bloc_tutorial/bloc/post/post_bloc.dart';
 import 'package:bloc_tutorial/bloc/switch_slider/switch_slider_bloc.dart';
 import 'package:bloc_tutorial/bloc/todo/todo_bloc.dart';
 import 'package:bloc_tutorial/repository/favourite_repositry.dart';
 import 'package:bloc_tutorial/ui/favourite_app_screen.dart';
 import 'package:bloc_tutorial/ui/image_picker_screen.dart';
+import 'package:bloc_tutorial/ui/post_screen.dart';
 import 'package:bloc_tutorial/ui/switch_slider_screen.dart';
 import 'package:bloc_tutorial/ui/todo_screen.dart';
 import 'package:bloc_tutorial/utils/image_picker_utils.dart';
@@ -39,6 +41,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<FavouriteAppBloc>(
             create: (_) => FavouriteAppBloc(FavouriteRepositry()),
+          ), 
+          BlocProvider<PostBloc>(
+            create: (_) => PostBloc(),
           )
         ],
         child: MaterialApp(
@@ -50,7 +55,7 @@ class MyApp extends StatelessWidget {
             // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             useMaterial3: true,
           ),
-          home: FavouriteAppScreen(),
+          home: PostScreen(),
         ));
   }
 }
