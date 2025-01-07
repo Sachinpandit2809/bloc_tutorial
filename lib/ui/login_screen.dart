@@ -98,10 +98,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     buildWhen: (previous, current) => false,
                     builder: (context, state) {
                       return ElevatedButton(
+                        
                         onPressed: () {
                           context.read<LoginBloc>().add(LoginApi());
                         },
-                        child: const Text('Login'),
+                        child: BlocBuilder<LoginBloc, LoginState>(builder: (context, state) {
+                          if (state.loading) {
+                            return const CircularProgressIndicator();
+                          } else {
+                            return const Text("Login");
+                          }
+                        }),
                       );
                     }),
               )

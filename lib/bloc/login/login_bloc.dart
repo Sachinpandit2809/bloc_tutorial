@@ -22,7 +22,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   void _onLoginApi(LoginApi event, Emitter emit) async {
-    emit(state.copyWith(status: LoginStatus.loading));
+    emit(state.copyWith(loading: true, status: LoginStatus.loading));
     Map data = {'email': state.email, 'password': state.password};
     try {
       final response = await http.post(
@@ -38,12 +38,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         //   emit(state.copyWith(status: LoginStatus.error, message: res['error']));
         // }
         emit(state.copyWith(
-            status: LoginStatus.success, message: 'Login Success'));
+            loading: false,
+            status: LoginStatus.success,
+            message: 'Login Success'));
       } else {
-        emit(state.copyWith(status: LoginStatus.error, message: res['error']));
+        emit(state.copyWith(
+            loading: false, status: LoginStatus.error, message: res['error']));
       }
     } catch (e) {
-      emit(state.copyWith(status: LoginStatus.error, message: e.toString()));
+      emit(state.copyWith(
+          loading: false, status: LoginStatus.error, message: e.toString()));
     }
   }
 }

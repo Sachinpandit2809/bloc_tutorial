@@ -20,8 +20,5 @@ class PasswordChange extends LoginEvent{
 }
 
 class LoginApi extends LoginEvent{
-  // final String email;
-  // final String password;
-  // const Login({required this.email, required this.password});
-  // List<Object> get props => [email, password];
+
 }

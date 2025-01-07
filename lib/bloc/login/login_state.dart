@@ -7,8 +7,10 @@ class LoginState extends Equatable {
   final String email;
   final String password;
   final String message;
+  final bool loading;
   const LoginState({
     this.status = LoginStatus.initial,
+    this.loading = false,
     this.email = '',
     this.password = '',
     this.message = '',
@@ -17,6 +19,7 @@ class LoginState extends Equatable {
   LoginState copyWith({
     LoginStatus? status,
     String? email,
+    bool ? loading,
     String? password,
     String? message,
   }) {
@@ -25,11 +28,10 @@ class LoginState extends Equatable {
       email: email ?? this.email,
       password: password ?? this.password,
       message: message ?? this.message,
+      loading: loading ?? this.loading,
     );
   }
 
   @override
-  List<Object> get props => [status, email, password, message];
+  List<Object> get props => [status, email, password, message, loading];
 }
-
-
