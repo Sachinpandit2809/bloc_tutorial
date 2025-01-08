@@ -88,6 +88,7 @@ class _CounterScreenState extends State<CounterScreen> {
       create: (_) => counterBloc,
       child: Scaffold(
         appBar: AppBar(
+          
           title: const Text('Counter'),
           actions: [
             IconButton(

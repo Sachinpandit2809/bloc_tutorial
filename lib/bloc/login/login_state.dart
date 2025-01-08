@@ -19,7 +19,7 @@ class LoginState extends Equatable {
   LoginState copyWith({
     LoginStatus? status,
     String? email,
-    bool ? loading,
+    bool? loading,
     String? password,
     String? message,
   }) {
